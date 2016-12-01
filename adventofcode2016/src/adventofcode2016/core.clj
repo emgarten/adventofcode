@@ -1,6 +1,13 @@
-(ns adventofcode2016.core)
+(ns adventofcode2016.core
+  (:require [adventofcode2016.day01 :as day01])
+  (:require [clojure.java.io :as io])
+  (:use [clojure.pprint]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn main
+  []
+  (-> "day01.txt"
+      io/resource
+      io/file
+      slurp
+      day01/solve
+      pprint))
