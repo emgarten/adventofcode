@@ -32,12 +32,22 @@
   (testing "Another example"
     (is (= { :row 2 :col 10 } (walk (parse "R5, L5, R5, R3"))))))
 
-(deftest solve-test
+(deftest solve-part-1-test
   (testing "Basic move"
-    (is (= 7 (solve "R2, L5"))))
+    (is (= 7 (solve-part-1 "R2, L5"))))
   (testing "Almost a circle"
-    (is (= 2 (solve "R2, R2, R2"))))
+    (is (= 2 (solve-part-1 "R2, R2, R2"))))
   (testing "Circle twice"
-    (is (= 0 (solve "R2, R2, R2, R2, L2, L2, L2, L2"))))
+    (is (= 0 (solve-part-1 "R2, R2, R2, R2, L2, L2, L2, L2"))))
   (testing "Another example"
-    (is (= 12 (solve "R5, L5, R5, R3")))))
+    (is (= 12 (solve-part-1 "R5, L5, R5, R3")))))
+
+(deftest solve-part-2-test
+  (testing "Basic move"
+    (is (= 7 (solve-part-1 "R2, L5"))))
+  (testing "Almost a circle"
+    (is (= 2 (solve-part-1 "R2, R2, R2"))))
+  (testing "Circle twice"
+    (is (= 0 (solve-part-1 "R2, R2, R2, R2, L2, L2, L2, L2"))))
+  (testing "Another example"
+    (is (= 12 (solve-part-1 "R5, L5, R5, R3")))))
