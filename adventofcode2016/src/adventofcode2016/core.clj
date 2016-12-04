@@ -9,5 +9,5 @@
       io/resource
       io/file
       slurp
-      day02/solve-part-1
+      day02/solve-part-2
       pprint))

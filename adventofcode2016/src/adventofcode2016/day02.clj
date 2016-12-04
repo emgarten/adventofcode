@@ -18,6 +18,23 @@
     (->Key "8" 2 1)
     (->Key "9" 2 2)])
 
+; Part 2
+(def keypad-2
+  [
+    (->Key "1" 0 2)
+    (->Key "2" 1 1)
+    (->Key "3" 1 2)
+    (->Key "4" 1 3)
+    (->Key "5" 2 0)
+    (->Key "6" 2 1)
+    (->Key "7" 2 2)
+    (->Key "8" 2 3)
+    (->Key "9" 2 4)
+    (->Key "A" 3 1)
+    (->Key "B" 3 2)
+    (->Key "C" 3 3)
+    (->Key "D" 4 2)])
+
 (defn match-key-id
   [key key-id]
   (= key-id (:id key)))
@@ -75,5 +92,14 @@
   (rest
    (process-keys
     keypad-1
+    (get-lines input-data)
+    ["5"])))
+
+(defn solve-part-2
+  "Read and process day2 input to find the keypad combination."
+  [input-data]
+  (rest
+   (process-keys
+    keypad-2
     (get-lines input-data)
     ["5"])))
