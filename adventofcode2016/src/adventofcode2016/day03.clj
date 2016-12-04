@@ -14,6 +14,16 @@
   [lines]
   (map #(parse-line %) lines))
 
+(defn get-vertical-triples
+  [lines]
+  (let [orig (get-triples lines)]
+    (partition 3
+      (flatten
+       (conj '()
+            (map #(last %) orig)
+            (map #(second %) orig)
+            (map #(first %) orig))))))
+
 (defn test-side
   [total side]
   (let [result (> (- total side) side)]
@@ -29,4 +39,11 @@
   (count
    (filter #(triangle? %)
      (get-triples
+      (get-lines input-data)))))
+
+(defn solve-part-2
+  [input-data]
+  (count
+   (filter #(triangle? %)
+     (get-vertical-triples
       (get-lines input-data)))))
