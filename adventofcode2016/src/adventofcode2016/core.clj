@@ -1,13 +1,13 @@
 (ns adventofcode2016.core
-  (:require [adventofcode2016.day02 :as day02])
+  (:require [adventofcode2016.day03 :as day03])
   (:require [clojure.java.io :as io])
   (:use [clojure.pprint]))
 
 (defn main
   []
-  (-> "day02.txt"
+  (-> "day03.txt"
       io/resource
       io/file
       slurp
-      day02/solve-part-2
+      day03/solve-part-1
       pprint))
