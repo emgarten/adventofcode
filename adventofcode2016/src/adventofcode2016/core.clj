@@ -8,5 +8,5 @@
   []
   (-> "day04.txt"
       slurp-resource
-      day04/solve-part-1
+      day04/solve-part-2
       pprint))

@@ -46,8 +46,44 @@
     ;(pprint (str "checksum: " checksum " match: " (:checksum room)))
     (= checksum (:checksum room))))
 
+(defn get-valid-rooms
+  [input-data]
+  (filter #(valid-checksum? %) (get-rooms (get-lines input-data))))
+
+(defn shift-letter
+  [letter count]
+  (cond
+    (true? (Character/isDigit letter)) ""
+    (= (str letter) "-") " "
+    :else
+      (let [x (int letter)
+            i (- x 97)
+            j (+ i count)
+            k (mod j 26)
+            y (+ k 97)]
+        (str (char y)))))
+
+(defn decode-room
+  [room]
+  (let [sector (:sector room)
+        data (:data room)]
+    (str/trim
+     (str/join
+      (map #(shift-letter % sector) data)))))
+
+(defn get-room-string
+  [room]
+  (let [s (str "Room: " (decode-room room) " Sector: " (:sector room))]
+   s))
+
 (defn solve-part-1
   [input-data]
   (apply +
    (map :sector
-      (filter #(valid-checksum? %) (get-rooms (get-lines input-data))))))
+      (get-valid-rooms input-data))))
+
+(defn solve-part-2
+  [input-data]
+  (pprint
+    (map get-room-string
+      (get-valid-rooms input-data))))

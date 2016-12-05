@@ -22,3 +22,13 @@
     (is (= 123 (solve-part-1 "yxffaaaddddd-123[dafxy]"))))
   (testing "ordering ties"
     (is (= 123 (solve-part-1 "tt-bb-zzz-yyy-xxx-aaa-sss-123[asxyz]")))))
+
+(deftest decode-room-test
+  (testing "given example"
+    (is (= "very encrypted name" (decode-room (->Room "qzmt-zixmtkozy-ivhz-343" 343 "foo" "foo"))))))
+
+(deftest shift-letter-test
+  (testing "A->B"
+    (is (= "b" (shift-letter \a 1))))
+  (testing "Z->A"
+    (is (= "a" (shift-letter \z 1)))))
