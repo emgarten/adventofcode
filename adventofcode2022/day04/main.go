@@ -28,12 +28,16 @@ func main() {
 	total := 0
 
 	for _, r := range entries {
-		if r.hasFullOverlap() {
+		if r.hasIntersection() {
 			total++
 		}
 	}
 
 	fmt.Printf("Entries: %v total: %v\n", len(entries), total)
+}
+
+func (e *Entry) hasIntersection() bool {
+	return e.A.hasIntersection(e.B)
 }
 
 func (e *Entry) hasFullOverlap() bool {
@@ -42,6 +46,14 @@ func (e *Entry) hasFullOverlap() bool {
 
 func (r *Range) isSubsetOrEqual(a Range) bool {
 	return r.Start <= a.Start && r.End >= a.End
+}
+
+func (r *Range) hasIntersection(a Range) bool {
+	return r.isPointInRange(a.Start) || r.isPointInRange(a.End) || a.isPointInRange(r.Start) || a.isPointInRange(r.End)
+}
+
+func (r *Range) isPointInRange(x int) bool {
+	return r.Start <= x && r.End >= x
 }
 
 func getEntries(lines []string) []*Entry {
