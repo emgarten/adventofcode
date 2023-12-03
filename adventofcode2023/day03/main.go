@@ -34,6 +34,53 @@ func main() {
 	m := getMatrix(lines)
 
 	fmt.Printf("Lines: %v missing parts: %v\n", len(lines), sumMissingParts(m, 1))
+	fmt.Printf("Lines: %v gear ratio: %v\n", len(lines), sumGearRatios(m))
+}
+
+// Part 2
+func sumGearRatios(m Matrix) int {
+	return walkMatrix(m, getGearRatio)
+}
+
+// Get the gear ratio of a symbol
+func getGearRatio(m Matrix, i, j int, r rune) int {
+	seen := make(map[string]bool)
+
+	if r == '*' {
+		nums := make([]int, 0)
+
+		for _, c := range getAdj(m, i, j, j, 1) {
+			if coordSquareType(m, c) == SquareDigit {
+				row := c.I
+				start := numStart(m, row, c.J)
+
+				key := fmt.Sprintf("%d|%d", row, start)
+				if !seen[key] {
+					seen[key] = true
+					nums = append(nums, getNum(m, row, start))
+				}
+			}
+		}
+
+		if len(nums) == 2 {
+			return nums[0] * nums[1]
+		}
+	}
+
+	return 0
+}
+
+// Walk and sum up the matrix
+func walkMatrix(m Matrix, f func(m Matrix, i, j int, r rune) int) int {
+	total := 0
+
+	for i, row := range m {
+		for j, r := range row {
+			total += f(m, i, j, r)
+		}
+	}
+
+	return total
 }
 
 // Part 1
