@@ -18,11 +18,11 @@ func main() {
 	parts := strings.Split(input, ",")
 	for _, p := range parts {
 		x := hash(p)
-		fmt.Printf("%v: %v\n", p, x)
+		// fmt.Printf("%v: %v\n", p, x)
 		total += x
 	}
 
-	fmt.Printf("H: %d\n", hash("H"))
+	fmt.Printf("rn: %d\n", hash("rn"))
 
 	fmt.Printf("Lines: %v total: %v\n", len(lines), total)
 }
