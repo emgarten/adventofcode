@@ -30,10 +30,12 @@ type (
 	}
 
 	CacheContext struct {
-		Matrix     *Matrix
-		MaxI       int
-		MaxJ       int
-		LowestPath map[State]int
+		Matrix        *Matrix
+		MaxI          int
+		MaxJ          int
+		LowestPath    map[State]int
+		MaxConsMoves  int // Max consecutive moves in the same direction
+		MinBeforeTurn int // Min consecutive moves in the same direction before turn
 	}
 
 	Coords struct {
@@ -86,10 +88,12 @@ func matrixString(m Matrix) string {
 
 func lowestCostPath(m *Matrix) int {
 	cacheContext := &CacheContext{
-		Matrix:     m,
-		MaxI:       len(*m),
-		MaxJ:       len((*m)[0]),
-		LowestPath: make(map[State]int),
+		Matrix:        m,
+		MaxI:          len(*m),
+		MaxJ:          len((*m)[0]),
+		LowestPath:    make(map[State]int),
+		MaxConsMoves:  10,
+		MinBeforeTurn: 4,
 	}
 	target := Coords{cacheContext.MaxI - 1, cacheContext.MaxJ - 1}
 	// target := Coords{0, 8}
@@ -127,7 +131,8 @@ func getShortestPath(cacheContext *CacheContext, start, target Coords) int {
 		}
 
 		// Check if we reached the target, if so, do not walk further
-		if v.State.I == target.I && v.State.J == target.J {
+		// Cannot stop until we have hit the min number of moves
+		if v.State.I == target.I && v.State.J == target.J && v.State.Moves >= cacheContext.MinBeforeTurn {
 			fmt.Printf("Hit target: %v\n", v.HeatLoss)
 			return v.HeatLoss
 		}
@@ -192,8 +197,13 @@ func getNeighborOrNil(c *CacheContext, cur *State, d Direction) *State {
 		return nil
 	}
 
-	// Move limit hit
-	if d == cur.Dir && cur.Moves == 3 {
+	// Same direction, Move limit hit
+	if d == cur.Dir && cur.Moves == c.MaxConsMoves {
+		return nil
+	}
+
+	// Direction changed and min limit not hit
+	if d != cur.Dir && cur.Moves < c.MinBeforeTurn {
 		return nil
 	}
 
