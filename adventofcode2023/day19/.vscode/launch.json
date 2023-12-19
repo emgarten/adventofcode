@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Part 1",
+            "name": "Test 1",
             "type": "go",
             "request": "launch",
             "mode": "auto",
@@ -12,13 +12,13 @@
             ]
         },
         {
-            "name": "Part 2",
+            "name": "Input 1",
             "type": "go",
             "request": "launch",
             "mode": "auto",
             "program": "main.go",
             "args": [
-                "test-2.txt"
+                "input-1.txt"
             ]
         }
     ]
